@@ -8,7 +8,7 @@ WIDTH = 300
 
 class Ball:
     def __init__(self):
-        self.R = randint(1, 50)
+        self.R = randint(20, 50)
         self.x = randint(self.R, WIDTH - self.R)
         self.y = randint(self.R, HEIGHT - self.R)
         self.dx, self.dy = (+2, +3)
@@ -35,13 +35,14 @@ def canvas_click_handler(event):
 
 
 def tick():
-    ball.move()
-    ball.show()
+    for ball in balls:
+        ball.move()
+        ball.show()
     root.after(50, tick)
 
 
 def main():
-    global root, canvas, ball
+    global root, canvas, balls
 
     root = tk.Tk()
     root.geometry(str(WIDTH) + "x" + str(HEIGHT))
@@ -49,7 +50,7 @@ def main():
     canvas = tk.Canvas(root)
     canvas.pack(anchor="nw", fill=tk.BOTH)
     canvas.bind('<Button-1>', canvas_click_handler)
-    ball=Ball()
+    balls=[Ball() for i in range(5)]
     tick()
     root.mainloop()
 
